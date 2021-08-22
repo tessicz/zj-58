@@ -472,7 +472,7 @@ int main(int argc, char *argv[]) {
                  iBlockHeight, tHeader.cupsHeight - iRowsToPrint);
 
       iRowsToPrint -= iBlockHeight;
-      unsigned iBytesChunk = 0;
+      int iBytesChunk = 0;
 
       // first, fetch whole block from the image
       if (iBlockHeight)
@@ -483,6 +483,11 @@ int main(int argc, char *argv[]) {
                  iBytesChunk,
                  tHeader.cupsBytesPerLine *
                      iBlockHeight);
+
+	if (iBytesChunk<0)
+	    {
+		iBytesChunk=(tHeader.cupsBytesPerLine *iBlockHeight)+iBytesChunk;
+	    }
 
       // if original image is wider - rearrange buffer so that our calculated
       // lines come one-by-one without extra gaps
